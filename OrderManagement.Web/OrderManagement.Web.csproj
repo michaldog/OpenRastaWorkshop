@@ -55,7 +55,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="default.html" />
-    <Content Include="JavaScript\Controller.js" />
+    <Content Include="JavaScript\App.js" />
     <Content Include="Scripts\backbone.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\underscore.js" />
@@ -70,7 +70,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bundles\JsNullTransform.cs" />
+    <Compile Include="Bundling\JsNullTransform.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -85,6 +85,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="JavaScript\Models\" />
+    <Folder Include="JavaScript\Views\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Site.Master" />

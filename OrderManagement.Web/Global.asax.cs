@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Web;
 using Microsoft.Web.Optimization;
-using OrderManagement.Web.Bundles;
+using OrderManagement.Web.Bundling;
 
 namespace OrderManagement.Web
 {
@@ -10,7 +10,9 @@ namespace OrderManagement.Web
         void Application_Start(object sender, EventArgs e)
         {
             var js = new Bundle("~/Scripts/app.js", typeof(JsNullTransform));
-            js.AddDirectory("~/JavaScript", "*.js", true);
+            js.AddDirectory("~/JavaScript/Models", "*.js", true);
+            js.AddDirectory("~/JavaScript/Views", "*.js", true);
+            js.AddFile("~/JavaScript/App.js");
             BundleTable.Bundles.Add(js);
         }
     }
