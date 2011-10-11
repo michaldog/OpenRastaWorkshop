@@ -25,5 +25,10 @@ namespace OrderManagement.Infrastructure
         {
             return Orders.SingleOrDefault(o => o.Id == id);
         }
+
+        public void Remove(Order order)
+        {
+            Orders.Remove(order);
+        }
     }
 }

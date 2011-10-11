@@ -31,5 +31,15 @@ namespace OrderManagement.Handlers
             orderToUpdate.Update(order.Customer);
             return new OperationResult.OK(order);
         }
+
+        public OperationResult Delete(int id)
+        {
+            var order = _database.GetOrder(id);
+
+            if (order == null) return new OperationResult.NotFound();
+
+            _database.Remove(order);
+            return new OperationResult.NoContent();
+        }
     }
 }

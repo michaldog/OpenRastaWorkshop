@@ -106,6 +106,42 @@ namespace OrderManagement.Tests.Integration
         }
 
 
+        [Test]
+        public void Delete_WhenHasPostedOrder_ShouldReturnStatusCodeNoContent()
+        {
+            var orderUri = PostOrder();
+            var inMemoryRequest = new InMemoryRequest { Uri = new Uri(orderUri), HttpMethod = "DELETE" };
+
+            var response = _inMemoryHost.ProcessRequest(inMemoryRequest);
+
+            Assert.AreEqual((int)HttpStatusCode.NoContent, response.StatusCode);
+        }
+
+
+        [Test]
+        public void Delete_WhenHasNotPostedOrder_ShouldReturnStatusCodeNotFound()
+        {
+            var inMemoryRequest = new InMemoryRequest { Uri = new Uri("http://localhost/order/1"), HttpMethod = "DELETE" };
+
+            var response = _inMemoryHost.ProcessRequest(inMemoryRequest);
+
+            Assert.AreEqual((int)HttpStatusCode.NotFound, response.StatusCode);
+        }
+
+
+        [Test]
+        public void Get_WhenHasDeletedOrder_ShouldReturnStatusCodeNotFound()
+        {
+            var orderUri = PostOrder();
+            _inMemoryHost.ProcessRequest(new InMemoryRequest { Uri = new Uri(orderUri), HttpMethod = "DELETE" });
+            var inMemoryRequest = new InMemoryRequest { Uri = new Uri(orderUri), HttpMethod = "GET" };
+
+            var response = _inMemoryHost.ProcessRequest(inMemoryRequest);
+
+            Assert.AreEqual((int)HttpStatusCode.NotFound, response.StatusCode);
+        }
+
+
         private string PostOrder()
         {
             var inMemoryRequest = new InMemoryRequest {Uri = new Uri("http://localhost/order"), HttpMethod = "POST"};

@@ -6,5 +6,6 @@ namespace OrderManagement.Infrastructure
     {
         void Store(Order order);
         Order GetOrder(int id);
+        void Remove(Order order);
     }
 }
