@@ -1,5 +1,7 @@
 ﻿using OpenRasta.Configuration;
+using OpenRasta.DI;
 using OrderManagement.Handlers;
+using OrderManagement.Infrastructure;
 using OrderManagement.Resources;
 
 namespace OrderManagement
@@ -10,6 +12,8 @@ namespace OrderManagement
         {
             using (OpenRastaConfiguration.Manual)
             {
+                ResourceSpace.Uses.CustomDependency<IDatabase, Database>(DependencyLifetime.Transient);
+
                 ResourceSpace.Has
                     .ResourcesOfType<Order>()
                     .AtUri("/order/{id}")

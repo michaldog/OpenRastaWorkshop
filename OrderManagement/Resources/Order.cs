@@ -7,5 +7,8 @@ namespace OrderManagement.Resources
     {
         [DataMember(Name = "id")]
         public int Id { get; set; }
+
+        [DataMember(Name = "customer")]
+        public string Customer { get; set; }
     }
 }

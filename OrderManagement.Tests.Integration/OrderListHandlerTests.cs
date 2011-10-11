@@ -4,6 +4,7 @@ using NUnit.Framework;
 using OpenRasta.DI;
 using OpenRasta.Hosting.InMemory;
 using OpenRasta.Web;
+using OrderManagement.Infrastructure;
 
 namespace OrderManagement.Tests.Integration
 {
@@ -15,6 +16,7 @@ namespace OrderManagement.Tests.Integration
         [SetUp]
         public void SetUp()
         {
+            Database.ResetDatabase();
             _inMemoryHost = new InMemoryHost(new Configuration());
             DependencyManager.SetResolver(_inMemoryHost.Resolver);
         }

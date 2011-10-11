@@ -72,6 +72,8 @@
     <Compile Include="Configuration.cs" />
     <Compile Include="Handlers\OrderHandler.cs" />
     <Compile Include="Handlers\OrderListHandler.cs" />
+    <Compile Include="Infrastructure\Database.cs" />
+    <Compile Include="Infrastructure\IDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Order.cs" />
   </ItemGroup>
