@@ -1,0 +1,53 @@
+﻿* {
+	margin: 0;
+	padding: 0;
+}
+
+header, footer, aside, nav, article {
+	display: block;
+}
+
+html,body
+{
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+body {
+	margin: 0 auto;
+	width: 940px;
+	font: 13px/22px Helvetica, Arial, sans-serif;
+	background: #f0f0f0;
+}
+
+header {
+    height: 50px;
+    border-bottom: 1px solid black;
+    z-index: 99;
+}
+
+header h1 {
+    padding-top: 10px;
+}
+
+#content 
+{
+	display: table;
+	height:auto;
+    position: absolute;
+    height: 90%;
+    padding-top: 50px;
+    top: 0;
+}
+
+aside {
+	display: table-cell;
+	width: 200px;
+    border-right: 1px solid black;
+}
+	
+#mainContent {
+	display: table-cell;
+	width: 720px;
+	padding-left: 20px;
+}
