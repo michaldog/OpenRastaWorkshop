@@ -1,0 +1,30 @@
+
+# ReSharper meta directory
+_ReSharper*
+
+# Build Folders (you can keep bin if you'd like, to store dlls and pdbs)
+bin
+obj
+
+# user settings
+*.user
+*.suo
+
+# if you have pictures, windows will likely create those annoying index files
+Thumbs.db
+
+# Subversion directories
+.svn
+
+# RavenDB
+*.RavenDB/Data
+
+# OSX Files
+.DS_Store
+log-file.txt
+
+# Visual Studio Productivity Power Tools
+*.docstates
+Out
+TestResult.xml
+TestResults
