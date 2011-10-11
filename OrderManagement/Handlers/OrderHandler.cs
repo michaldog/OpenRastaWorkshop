@@ -1,5 +1,6 @@
 using OpenRasta.Web;
 using OrderManagement.Infrastructure;
+using OrderManagement.Resources;
 
 namespace OrderManagement.Handlers
 {
@@ -18,6 +19,16 @@ namespace OrderManagement.Handlers
 
             if (order == null) return new OperationResult.NotFound();
 
+            return new OperationResult.OK(order);
+        }
+
+        public OperationResult Put(int id, Order order)
+        {
+            var orderToUpdate = _database.GetOrder(id);
+
+            if (orderToUpdate == null) return new OperationResult.NotFound();
+
+            orderToUpdate.Update(order.Customer);
             return new OperationResult.OK(order);
         }
     }

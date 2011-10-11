@@ -60,6 +60,52 @@ namespace OrderManagement.Tests.Integration
             Assert.AreEqual((int)HttpStatusCode.NotFound, response.StatusCode);
         }
 
+
+        [Test]
+        public void Put_WhenHasPostedOrder_ShouldReturnStatusCodeOK()
+        {
+            var orderUri = PostOrder();
+
+            var response = PutOrder(orderUri, new {customer = "torstein"});
+
+            Assert.AreEqual((int)HttpStatusCode.OK, response.StatusCode);
+        }
+
+        [Test]
+        public void Put_WhenHasPostedOrder_ShouldReturnStatusCodeNotFound()
+        {
+            var response = PutOrder("http://localhost/order/1", new { customer = "torstein" });
+
+            Assert.AreEqual((int)HttpStatusCode.NotFound, response.StatusCode);
+        }
+
+
+        [Test]
+        public void Put_WhenHasPostedOrder_ShouldReturnUpdatedOrder()
+        {
+            var orderUri = PostOrder();
+
+            var response = PutOrder(orderUri, new { customer = "torstein" });
+
+            var json = Utils.GetResultFromJson(response);
+            Assert.AreEqual("torstein", json.customer.Value);
+        }
+
+        [Test]
+        public void Get_WhenHasPuttedOrder_ShouldReturnUpdatedOrder()
+        {
+            var orderUri = PostOrder();
+            PutOrder(orderUri, new {customer = "torstein"});
+            var inMemoryRequest = new InMemoryRequest { Uri = new Uri(orderUri), HttpMethod = "GET" };
+
+            var response = _inMemoryHost.ProcessRequest(inMemoryRequest);
+
+            var json = Utils.GetResultFromJson(response);
+            Assert.AreEqual("torstein", json.customer.Value);
+
+        }
+
+
         private string PostOrder()
         {
             var inMemoryRequest = new InMemoryRequest {Uri = new Uri("http://localhost/order"), HttpMethod = "POST"};
@@ -70,5 +116,17 @@ namespace OrderManagement.Tests.Integration
 
             return response.Headers["location"];
         }
+
+        private IResponse PutOrder(string location, dynamic updatedOrder)
+        {
+            var inMemoryRequest = new InMemoryRequest { Uri = new Uri(location), HttpMethod = "PUT" };
+            var jsonFromObject = Utils.GetJsonFromObject(updatedOrder);
+            inMemoryRequest.Entity = Utils.GetHttpEntity(inMemoryRequest, jsonFromObject, MediaType.Json);
+
+            var response = _inMemoryHost.ProcessRequest(inMemoryRequest);
+
+            return response;
+        }
+        
     }
 }

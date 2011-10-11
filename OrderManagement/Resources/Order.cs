@@ -9,6 +9,11 @@ namespace OrderManagement.Resources
         public int Id { get; set; }
 
         [DataMember(Name = "customer")]
-        public string Customer { get; set; }
+        public string Customer { get; private set; }
+
+        public void Update(string customer)
+        {
+            Customer = customer;
+        }
     }
 }
