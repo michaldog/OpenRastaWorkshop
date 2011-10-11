@@ -76,6 +76,7 @@
     <Compile Include="Infrastructure\IDatabase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Order.cs" />
+    <Compile Include="Resources\OrderPreview.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Scripts\" />

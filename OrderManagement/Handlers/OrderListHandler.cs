@@ -1,6 +1,7 @@
 using OpenRasta.Web;
 using OrderManagement.Infrastructure;
 using OrderManagement.Resources;
+using System.Linq;
 
 namespace OrderManagement.Handlers
 {
@@ -15,7 +16,9 @@ namespace OrderManagement.Handlers
 
         public OperationResult Get()
         {
-            return new OperationResult.OK();
+            var orderPreviews = _database.GetAllOrders().Select(o => new OrderPreview(o.CreateUri()));
+
+            return new OperationResult.OK(orderPreviews.ToArray());
         }
 
         public OperationResult Post(Order order)

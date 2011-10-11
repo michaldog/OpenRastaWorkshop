@@ -21,7 +21,7 @@ namespace OrderManagement
                     .AsJsonDataContract();
 
                 ResourceSpace.Has
-                    .ResourcesOfType<Order[]>()
+                    .ResourcesOfType<OrderPreview[]>()
                     .AtUri("/order")
                     .HandledBy<OrderListHandler>()
                     .AsJsonDataContract();

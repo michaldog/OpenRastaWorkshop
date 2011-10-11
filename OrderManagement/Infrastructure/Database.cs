@@ -30,5 +30,10 @@ namespace OrderManagement.Infrastructure
         {
             Orders.Remove(order);
         }
+
+        public IEnumerable<Order> GetAllOrders()
+        {
+            return Orders;
+        }
     }
 }

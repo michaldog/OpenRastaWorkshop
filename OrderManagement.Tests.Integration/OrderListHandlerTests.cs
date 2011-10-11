@@ -31,13 +31,37 @@ namespace OrderManagement.Tests.Integration
             Assert.AreEqual((int)HttpStatusCode.OK, response.StatusCode);
         }
 
+
+        [Test]
+        public void Get_WhenHasPostedOrder_ShouldReturnOneOrderPreview()
+        {
+            PostOrder();
+            var inMemoryRequest = new InMemoryRequest { Uri = new Uri("http://localhost/order"), HttpMethod = "GET" };
+
+            var response = _inMemoryHost.ProcessRequest(inMemoryRequest);
+
+            var resultFromJson = Utils.GetResultFromJson(response);
+            Assert.AreEqual(1, resultFromJson.Count);
+        }
+
+
+        [Test]
+        public void Get_WhenHasPostedOrder_ShouldReturnOrderPreviewWithUri()
+        {
+            var postOrderResponse = PostOrder();
+            var inMemoryRequest = new InMemoryRequest { Uri = new Uri("http://localhost/order"), HttpMethod = "GET" };
+
+            var response = _inMemoryHost.ProcessRequest(inMemoryRequest);
+
+            var resultFromJson = Utils.GetResultFromJson(response);
+            Assert.AreEqual(postOrderResponse.Headers["location"], resultFromJson[0].uri.Value);
+        }
+
+
         [Test]
         public void Post_WithOrder_ShouldReturnStatusCodeCreated()
         {
-            var inMemoryRequest = new InMemoryRequest { Uri = new Uri("http://localhost/order"), HttpMethod = "POST" };
-            inMemoryRequest.Entity = Utils.GetHttpEntity(inMemoryRequest, "{}", MediaType.Json);
-
-            var response = _inMemoryHost.ProcessRequest(inMemoryRequest);
+            var response = PostOrder();
 
             Assert.AreEqual((int)HttpStatusCode.Created, response.StatusCode);
         }
@@ -45,13 +69,19 @@ namespace OrderManagement.Tests.Integration
         [Test]
         public void Post_WithOrder_ShouldReturnLocationHeader()
         {
-            var inMemoryRequest = new InMemoryRequest { Uri = new Uri("http://localhost/order"), HttpMethod = "POST" };
-            inMemoryRequest.Entity = Utils.GetHttpEntity(inMemoryRequest, "{}", MediaType.Json);
-
-            var response = _inMemoryHost.ProcessRequest(inMemoryRequest);
+            var response = PostOrder();
 
             Assert.IsNotNull(response.Headers["location"]);
         }
 
+        private IResponse PostOrder()
+        {
+            var inMemoryRequest = new InMemoryRequest {Uri = new Uri("http://localhost/order"), HttpMethod = "POST"};
+            var jsonFromObject = Utils.GetJsonFromObject(new {customer = "eirik"});
+            inMemoryRequest.Entity = Utils.GetHttpEntity(inMemoryRequest, jsonFromObject, MediaType.Json);
+
+            var response = _inMemoryHost.ProcessRequest(inMemoryRequest);
+            return response;
+        }
     }
 }
