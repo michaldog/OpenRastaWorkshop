@@ -54,8 +54,14 @@
     <Reference Include="System.Web.ApplicationServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="default.html" />
+    <Content Include="default.htm" />
     <Content Include="JavaScript\App.js" />
+    <Content Include="JavaScript\Models\OrderPreview.js" />
+    <Content Include="JavaScript\Models\OrderPreviewList.js" />
+    <Content Include="JavaScript\Models\Order.js" />
+    <Content Include="JavaScript\Views\OrderListView.js" />
+    <Content Include="JavaScript\Views\OrderView.js" />
+    <Content Include="JavaScript\Views\OrderDetailsView.js" />
     <Content Include="Scripts\backbone.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\underscore.js" />
@@ -85,8 +91,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="JavaScript\Models\" />
-    <Folder Include="JavaScript\Views\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Site.Master" />
@@ -100,12 +104,11 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>False</UseIIS>
+          <UseIIS>True</UseIIS>
           <AutoAssignPort>False</AutoAssignPort>
           <DevelopmentServerPort>9000</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>
-          </IISUrl>
+          <IISUrl>http://localhost/OrderManagement.Web</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

@@ -28,7 +28,7 @@ namespace OrderManagement.Tests.Integration
         [Test]
         public void Get_WhenHasPostedOrder_ShoulReturnStatusCodeOK()
         {
-            var orderUri = PostOrder();
+            var orderUri = PostOrder().Headers["location"];
             var inMemoryRequest = new InMemoryRequest {Uri = new Uri(orderUri), HttpMethod = "GET"};
 
             var response = _inMemoryHost.ProcessRequest(inMemoryRequest);
@@ -40,7 +40,7 @@ namespace OrderManagement.Tests.Integration
         [Test]
         public void Get_WhenHasPostedOrderWithCustomerEirik_ShoulReturnOrderWithCustomerEirik()
         {
-            var orderUri = PostOrder();
+            var orderUri = PostOrder().Headers["location"];
             var inMemoryRequest = new InMemoryRequest { Uri = new Uri(orderUri), HttpMethod = "GET" };
 
             var response = _inMemoryHost.ProcessRequest(inMemoryRequest);
@@ -64,7 +64,7 @@ namespace OrderManagement.Tests.Integration
         [Test]
         public void Put_WhenHasPostedOrder_ShouldReturnStatusCodeOK()
         {
-            var orderUri = PostOrder();
+            var orderUri = PostOrder().Headers["location"];
 
             var response = PutOrder(orderUri, new {customer = "torstein"});
 
@@ -83,7 +83,7 @@ namespace OrderManagement.Tests.Integration
         [Test]
         public void Put_WhenHasPostedOrder_ShouldReturnUpdatedOrder()
         {
-            var orderUri = PostOrder();
+            var orderUri = PostOrder().Headers["location"];
 
             var response = PutOrder(orderUri, new { customer = "torstein" });
 
@@ -94,7 +94,7 @@ namespace OrderManagement.Tests.Integration
         [Test]
         public void Get_WhenHasPuttedOrder_ShouldReturnUpdatedOrder()
         {
-            var orderUri = PostOrder();
+            var orderUri = PostOrder().Headers["location"];
             PutOrder(orderUri, new {customer = "torstein"});
             var inMemoryRequest = new InMemoryRequest { Uri = new Uri(orderUri), HttpMethod = "GET" };
 
@@ -109,7 +109,7 @@ namespace OrderManagement.Tests.Integration
         [Test]
         public void Delete_WhenHasPostedOrder_ShouldReturnStatusCodeNoContent()
         {
-            var orderUri = PostOrder();
+            var orderUri = PostOrder().Headers["location"];
             var inMemoryRequest = new InMemoryRequest { Uri = new Uri(orderUri), HttpMethod = "DELETE" };
 
             var response = _inMemoryHost.ProcessRequest(inMemoryRequest);
@@ -132,7 +132,7 @@ namespace OrderManagement.Tests.Integration
         [Test]
         public void Get_WhenHasDeletedOrder_ShouldReturnStatusCodeNotFound()
         {
-            var orderUri = PostOrder();
+            var orderUri = PostOrder().Headers["location"];
             _inMemoryHost.ProcessRequest(new InMemoryRequest { Uri = new Uri(orderUri), HttpMethod = "DELETE" });
             var inMemoryRequest = new InMemoryRequest { Uri = new Uri(orderUri), HttpMethod = "GET" };
 
@@ -141,8 +141,24 @@ namespace OrderManagement.Tests.Integration
             Assert.AreEqual((int)HttpStatusCode.NotFound, response.StatusCode);
         }
 
+        [Test]
+        public void Post_WithOrder_ShouldReturnStatusCodeCreated()
+        {
+            var response = PostOrder();
 
-        private string PostOrder()
+            Assert.AreEqual((int)HttpStatusCode.Created, response.StatusCode);
+        }
+
+        [Test]
+        public void Post_WithOrder_ShouldReturnLocationHeader()
+        {
+            var response = PostOrder();
+
+            Assert.IsNotNull(response.Headers["location"]);
+        }
+
+
+        private IResponse PostOrder()
         {
             var inMemoryRequest = new InMemoryRequest {Uri = new Uri("http://localhost/order"), HttpMethod = "POST"};
             var jsonFromObject = Utils.GetJsonFromObject(new {customer = "eirik"});
@@ -150,7 +166,7 @@ namespace OrderManagement.Tests.Integration
 
             var response = _inMemoryHost.ProcessRequest(inMemoryRequest);
 
-            return response.Headers["location"];
+            return response;//;.Headers["location"];
         }
 
         private IResponse PutOrder(string location, dynamic updatedOrder)

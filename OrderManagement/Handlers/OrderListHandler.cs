@@ -16,17 +16,11 @@ namespace OrderManagement.Handlers
 
         public OperationResult Get()
         {
-            var orderPreviews = _database.GetAllOrders().Select(o => new OrderPreview(o.CreateUri()));
-
-            return new OperationResult.OK(orderPreviews.ToArray());
+            var orders = _database.GetAllOrders().Select(o => new OrderPreview(o));
+            
+            return new OperationResult.OK(orders.ToArray());
         }
 
-        public OperationResult Post(Order order)
-        {
-            _database.Store(order);
-
-            return new OperationResult.Created{RedirectLocation = order.CreateUri()};
-
-        }
+        
     }
 }

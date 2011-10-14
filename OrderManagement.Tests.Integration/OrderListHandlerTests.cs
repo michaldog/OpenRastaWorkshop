@@ -24,7 +24,7 @@ namespace OrderManagement.Tests.Integration
         [Test]
         public void OrderList_Get_ShouldReturnStatusCodeOK()
         {
-            var inMemoryRequest = new InMemoryRequest {Uri = new Uri("http://localhost/order"), HttpMethod = "GET"};
+            var inMemoryRequest = new InMemoryRequest {Uri = new Uri("http://localhost/orders"), HttpMethod = "GET"};
            
             var response = _inMemoryHost.ProcessRequest(inMemoryRequest);
 
@@ -36,7 +36,7 @@ namespace OrderManagement.Tests.Integration
         public void Get_WhenHasPostedOrder_ShouldReturnOneOrderPreview()
         {
             PostOrder();
-            var inMemoryRequest = new InMemoryRequest { Uri = new Uri("http://localhost/order"), HttpMethod = "GET" };
+            var inMemoryRequest = new InMemoryRequest { Uri = new Uri("http://localhost/orders"), HttpMethod = "GET" };
 
             var response = _inMemoryHost.ProcessRequest(inMemoryRequest);
 
@@ -49,29 +49,12 @@ namespace OrderManagement.Tests.Integration
         public void Get_WhenHasPostedOrder_ShouldReturnOrderPreviewWithUri()
         {
             var postOrderResponse = PostOrder();
-            var inMemoryRequest = new InMemoryRequest { Uri = new Uri("http://localhost/order"), HttpMethod = "GET" };
+            var inMemoryRequest = new InMemoryRequest { Uri = new Uri("http://localhost/orders"), HttpMethod = "GET" };
 
             var response = _inMemoryHost.ProcessRequest(inMemoryRequest);
 
             var resultFromJson = Utils.GetResultFromJson(response);
             Assert.AreEqual(postOrderResponse.Headers["location"], resultFromJson[0].uri.Value);
-        }
-
-
-        [Test]
-        public void Post_WithOrder_ShouldReturnStatusCodeCreated()
-        {
-            var response = PostOrder();
-
-            Assert.AreEqual((int)HttpStatusCode.Created, response.StatusCode);
-        }
-
-        [Test]
-        public void Post_WithOrder_ShouldReturnLocationHeader()
-        {
-            var response = PostOrder();
-
-            Assert.IsNotNull(response.Headers["location"]);
         }
 
         private IResponse PostOrder()

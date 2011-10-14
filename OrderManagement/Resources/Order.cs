@@ -8,12 +8,20 @@ namespace OrderManagement.Resources
         [DataMember(Name = "id")]
         public int Id { get; set; }
 
+        [DataMember(Name = "reference")]
+        public string Reference { get; set; }
+
         [DataMember(Name = "customer")]
         public string Customer { get; private set; }
 
-        public void Update(string customer)
+        [DataMember(Name = "details")]
+        public string Details { get; private set; }
+
+        public void Update(string reference, string customer, string details)
         {
+            Reference = reference;
             Customer = customer;
+            Details = details;
         }
     }
 }

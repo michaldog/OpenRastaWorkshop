@@ -28,7 +28,7 @@ namespace OrderManagement.Handlers
 
             if (orderToUpdate == null) return new OperationResult.NotFound();
 
-            orderToUpdate.Update(order.Customer);
+            orderToUpdate.Update(order.Reference, order.Customer, order.Details);
             return new OperationResult.OK(order);
         }
 
@@ -40,6 +40,14 @@ namespace OrderManagement.Handlers
 
             _database.Remove(order);
             return new OperationResult.NoContent();
+        }
+
+        public OperationResult Post(Order order)
+        {
+            _database.Store(order);
+
+            return new OperationResult.Created { RedirectLocation = order.CreateUri(), ResponseResource = order };
+
         }
     }
 }

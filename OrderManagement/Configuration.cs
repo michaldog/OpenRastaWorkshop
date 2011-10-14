@@ -17,12 +17,13 @@ namespace OrderManagement
                 ResourceSpace.Has
                     .ResourcesOfType<Order>()
                     .AtUri("/order/{id}")
+                    .And.AtUri("/order")
                     .HandledBy<OrderHandler>()
                     .AsJsonDataContract();
 
                 ResourceSpace.Has
                     .ResourcesOfType<OrderPreview[]>()
-                    .AtUri("/order")
+                    .AtUri("/orders")
                     .HandledBy<OrderListHandler>()
                     .AsJsonDataContract();
             }
