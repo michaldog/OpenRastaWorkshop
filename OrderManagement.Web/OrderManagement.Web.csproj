@@ -58,10 +58,8 @@
     <Content Include="JavaScript\App.js" />
     <Content Include="JavaScript\Models\OrderPreview.js" />
     <Content Include="JavaScript\Models\OrderPreviewList.js" />
-    <Content Include="JavaScript\Models\Order.js" />
     <Content Include="JavaScript\Views\OrderListView.js" />
     <Content Include="JavaScript\Views\OrderView.js" />
-    <Content Include="JavaScript\Views\OrderDetailsView.js" />
     <Content Include="Scripts\backbone.js" />
     <Content Include="Scripts\jquery-1.6.4.js" />
     <Content Include="Scripts\underscore.js" />

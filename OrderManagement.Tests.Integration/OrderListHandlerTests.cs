@@ -3,8 +3,6 @@ using System.Net;
 using NUnit.Framework;
 using OpenRasta.DI;
 using OpenRasta.Hosting.InMemory;
-using OpenRasta.Web;
-using OrderManagement.Infrastructure;
 
 namespace OrderManagement.Tests.Integration
 {
@@ -16,7 +14,6 @@ namespace OrderManagement.Tests.Integration
         [SetUp]
         public void SetUp()
         {
-            Database.ResetDatabase();
             _inMemoryHost = new InMemoryHost(new Configuration());
             DependencyManager.SetResolver(_inMemoryHost.Resolver);
         }
@@ -31,40 +28,7 @@ namespace OrderManagement.Tests.Integration
             Assert.AreEqual((int)HttpStatusCode.OK, response.StatusCode);
         }
 
-
-        [Test]
-        public void Get_WhenHasPostedOrder_ShouldReturnOneOrderPreview()
-        {
-            PostOrder();
-            var inMemoryRequest = new InMemoryRequest { Uri = new Uri("http://localhost/orders"), HttpMethod = "GET" };
-
-            var response = _inMemoryHost.ProcessRequest(inMemoryRequest);
-
-            var resultFromJson = Utils.GetResultFromJson(response);
-            Assert.AreEqual(1, resultFromJson.Count);
-        }
-
-
-        [Test]
-        public void Get_WhenHasPostedOrder_ShouldReturnOrderPreviewWithUri()
-        {
-            var postOrderResponse = PostOrder();
-            var inMemoryRequest = new InMemoryRequest { Uri = new Uri("http://localhost/orders"), HttpMethod = "GET" };
-
-            var response = _inMemoryHost.ProcessRequest(inMemoryRequest);
-
-            var resultFromJson = Utils.GetResultFromJson(response);
-            Assert.AreEqual(postOrderResponse.Headers["location"], resultFromJson[0].uri.Value);
-        }
-
-        private IResponse PostOrder()
-        {
-            var inMemoryRequest = new InMemoryRequest {Uri = new Uri("http://localhost/order"), HttpMethod = "POST"};
-            var jsonFromObject = Utils.GetJsonFromObject(new {customer = "eirik"});
-            inMemoryRequest.Entity = Utils.GetHttpEntity(inMemoryRequest, jsonFromObject, MediaType.Json);
-
-            var response = _inMemoryHost.ProcessRequest(inMemoryRequest);
-            return response;
-        }
+        
+        
     }
 }

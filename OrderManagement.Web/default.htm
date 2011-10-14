@@ -24,34 +24,11 @@
 
     <!-- Templates -->
     <script type="text/html" id="orderListTemplate">
-    <button class="addOrder">Add Order</button>
     <ul>
     </ul>
     </script>
     <script type="text/html" id="orderTemplate">
-    <div><%= title %><button>delete</button></div>
-    </script>
-
-    <script type="text/html" id="orderDetailsTemplate">
-    <form>
-        <p>
-            <input id="id" type="text" value="<%= id %>" disabled/>
-            <label for="id">Id</label>
-        </p>
-        <p>
-            <input id="reference" type="text" placeholder="Order Reference" value="<%= reference %>"/>
-            <label for="reference">Reference Number</label>
-        </p>
-        <p>
-            <input id="customer" type="text" placeholder="Customer" value="<%= customer %>"/>
-            <label for="customer">Customer</label>
-        </p>
-        <p class="details">
-            <label for="details">Order Details</label>
-            <textarea id="details" placeholder="Order details"><%= details %></textarea>
-        </p>
-        <input type="submit" value="Save order"/>
-    </form>
+    <div><%= title %></div>
     </script>
 </body>
 </html>

@@ -1,5 +1,5 @@
 ﻿var OrderPreview = Backbone.Model.extend({
-    getTitle: function () {
-        return this.get('reference') || "new order";
-    }
+        defaults: {
+            title: 'not set'
+        }
 });

@@ -7,13 +7,6 @@ namespace OrderManagement.Resources
     [DataContract(Name = "orderPreview")]
     public class OrderPreview
     {
-        public OrderPreview(Order order)
-        {
-            Id = order.Id;
-            Reference = order.Reference;
-            Uri = order.CreateUri().AbsoluteUri;
-        }
-
         [DataMember(Name = "id")]
         public int Id { get; set; }
 
