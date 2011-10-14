@@ -15,7 +15,7 @@ namespace OrderManagement.Repositories
 
         public void Update(Order order)
         {
-            var existingOrder = _orders.SingleOrDefault(x => x.Id == order.Id);
+            var existingOrder = _orders.FirstOrDefault(x => x.Id == order.Id);
             if (existingOrder != null)
                 existingOrder = order;
         }
