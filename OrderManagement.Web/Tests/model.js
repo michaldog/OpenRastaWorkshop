@@ -1,17 +1,21 @@
 $(function () {
-    module("Order");
-    test("test model without id has baseUri as url", function () {
-        var model = new Order({ id: null });
-        model.baseUri = 'testUri/';
+    module("OrderPreview");
+    test("test new model sets default title", function () {
+        var model = new OrderPreview();
 
-        equal(model.url(), model.baseUri);
-    });
-    
-    test("test model with id has baseUri/id as url", function () {
-        var model = new Order({ id: 4 });
-        model.baseUri = 'testUri/';
-
-        equal(model.url(), model.baseUri+4);
+        ok(model.get('title'));
     });
 
+    module("OrderView");
+    test("test render displays order title ", function () {
+        var orderTitle = "title",
+            order = new OrderPreview({ title: orderTitle }),
+            view = new OrderView({ model: order });
+
+        view.template = _.template('<%= title %>');
+
+        view.render();
+        
+        equals($(view.el).text(), orderTitle);
+    });
 });

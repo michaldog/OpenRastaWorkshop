@@ -7,7 +7,7 @@
             this.template = _.template($(this.template).html());
         },
         render: function() {
-            $(this.el).html(this.template(this.model.toJSON()));
+            $(this.el).html(this.template({title: 'placeholder'}));
             return this;
         }
     });
